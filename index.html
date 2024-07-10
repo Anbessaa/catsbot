@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATS Token App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .score-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .cat-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+        }
+        .join-community {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .join-btn {
+            background-color: #FFFFFF;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .rewards {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .reward-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .navigation {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: #1e1e1e;
+            padding: 10px;
+        }
+        .nav-button {
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .leaderboard {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 60px;
+        }
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .user-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .invite-friends {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .invite-btn {
+            background-color: #FFFFFF;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="home">
+            <div class="score-card">
+                <h2>Your Score</h2>
+                <img src="cat-icon.png" alt="Cat Icon" class="cat-icon">
+                <h1 id="catsScore">0 CATS</h1>
+            </div>
+            <div class="join-community">
+                <h3>CATS COMMUNITY</h3>
+                <p>Home for Telegram OGs</p>
+                <button class="join-btn" onclick="joinGroup()">Join</button>
+            </div>
+            <div class="rewards">
+                <h3>Your rewards</h3>
+                <div class="reward-item">
+                    <span>Account age</span>
+                    <span id="accountAgeReward">+0 CATS</span>
+                </div>
+                <div class="reward-item">
+                    <span>Telegram Premium</span>
+                    <span id="premiumReward">0</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="leaderboard" style="display: none;">
+            <h2>Telegram Wall of Fame</h2>
+            <div class="leaderboard" id="leaderboardList">
+                <!-- Leaderboard items will be inserted here -->
+            </div>
+        </div>
+        
+        <div id="friends" style="display: none;" class="invite-friends">
+            <h2>Invite friends<br>and get more CATS</h2>
+            <img src="cat-icon.png" alt="Cat Icon" class="cat-icon">
+            <p>Tap on the button to invite your friends</p>
+            <button class="invite-btn" onclick="inviteFriends()">Invite friends</button>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-button" onclick="showScreen('home')">
+            <span class="nav-icon">🏠</span>
+            Home
+        </button>
+        <button class="nav-button" onclick="showScreen('leaderboard')">
+            <span class="nav-icon">📊</span>
+            Leaderboard
+        </button>
+        <button class="nav-button" onclick="showScreen('friends')">
+            <span class="nav-icon">👥</span>
+            Friends
+        </button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function showScreen(screenName) {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('leaderboard').style.display = 'none';
+            document.getElementById('friends').style.display = 'none';
+            document.getElementById(screenName).style.display = 'block';
+            
+            if (screenName === 'leaderboard') {
+                fetchLeaderboard();
+            }
+        }
+
+        function fetchUserData() {
+            // Здесь должен быть запрос к вашему серверу для получения данных пользователя
+            // Для примера используем заглушки
+            document.getElementById('catsScore').textContent = '838 CATS';
+            document.getElementById('accountAgeReward').textContent = '+838 CATS';
+            document.getElementById('premiumReward').textContent = '0';
+        }
+
+        function fetchLeaderboard() {
+            // Здесь должен быть запрос к вашему серверу для получения данных лидерборда
+            // Для примера используем заглушки
+            const leaderboardData = [
+                { name: 'User1', score: 2561959, rank: 1 },
+                { name: 'User2', score: 1884940, rank: 2 },
+                { name: 'User3', score: 1821428, rank: 3 },
+                // ... добавьте больше пользователей
+            ];
+            
+            const leaderboardList = document.getElementById('leaderboardList');
+            leaderboardList.innerHTML = '';
+            leaderboardData.forEach(user => {
+                const item = document.createElement('div');
+                item.className = 'leaderboard-item';
+                item.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <div class="user-icon" style="background-color: ${getRandomColor()}">
+                            ${user.name.charAt(0).toUpperCase()}
+                        </div>
+                        <span>${user.name}</span>
+                    </div>
+                    <div>
+                        <span>${user.score.toLocaleString()} CATS</span>
+                        ${user.rank <= 3 ? `<span>🏅</span>` : ''}
+                    </div>
+                `;
+                leaderboardList.appendChild(item);
+            });
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function joinGroup() {
+            tg.openTelegramLink('https://t.me/your_group');
+        }
+
+        function inviteFriends() {
+            tg.ShareAppUrl();
+        }
+
+        // Инициализация
+        fetchUserData();
+        showScreen('home');
+    </script>
+</body>
+</html>
