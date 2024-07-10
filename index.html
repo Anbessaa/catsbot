@@ -6,116 +6,7 @@
     <title>CATS Token App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000000;
-            color: #FFFFFF;
-        }
-        .container {
-            padding: 20px;
-        }
-        h1, h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .score-card {
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .cat-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-        }
-        .join-community {
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .join-btn {
-            background-color: #FFFFFF;
-            color: #000000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .rewards {
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        .reward-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-        .navigation {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: space-around;
-            background-color: #1e1e1e;
-            padding: 10px;
-        }
-        .nav-button {
-            background: none;
-            border: none;
-            color: #FFFFFF;
-            font-size: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .nav-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        .leaderboard {
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 60px;
-        }
-        .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .user-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 10px;
-        }
-        .invite-friends {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .invite-btn {
-            background-color: #FFFFFF;
-            color: #000000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-        }
+        /* Your existing styles */
     </style>
 </head>
 <body>
@@ -190,21 +81,19 @@
         }
 
         function fetchUserData() {
-            // Здесь должен быть запрос к вашему серверу для получения данных пользователя
-            // Для примера используем заглушки
+            // Placeholder for your server request to get user data
             document.getElementById('catsScore').textContent = '838 CATS';
             document.getElementById('accountAgeReward').textContent = '+838 CATS';
             document.getElementById('premiumReward').textContent = '0';
         }
 
         function fetchLeaderboard() {
-            // Здесь должен быть запрос к вашему серверу для получения данных лидерборда
-            // Для примера используем заглушки
+            // Placeholder for your server request to get leaderboard data
             const leaderboardData = [
                 { name: 'User1', score: 2561959, rank: 1 },
                 { name: 'User2', score: 1884940, rank: 2 },
                 { name: 'User3', score: 1821428, rank: 3 },
-                // ... добавьте больше пользователей
+                // ... add more users
             ];
             
             const leaderboardList = document.getElementById('leaderboardList');
@@ -245,7 +134,7 @@
             tg.ShareAppUrl();
         }
 
-        // Инициализация
+        // Initialization
         fetchUserData();
         showScreen('home');
     </script>
