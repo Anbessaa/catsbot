@@ -1,5 +1,5 @@
 import telebot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 from datetime import datetime
 import requests
 
@@ -59,18 +59,12 @@ def send_welcome(message):
     cats_tokens = calculate_cats(is_premium, account_age_years)
 
     markup = InlineKeyboardMarkup()
-    markup.add(InlineKeyboardButton("Let's go", callback_data='open_app'))
+    markup.add(InlineKeyboardButton("Let's go", url='https://anbessaa.github.io/catsbot/'))
 
     welcome_message = f"Hello, {username}!\nYou have {cats_tokens} CATS tokens.\n"
     welcome_message += "How cool is your Telegram profile? Check your rating and receive rewards."
 
     bot.reply_to(message, welcome_message, reply_markup=markup)
-
-@bot.callback_query_handler(func=lambda call: True)
-def handle_callback(call):
-    if call.data == 'open_app':
-        # Здесь можно добавить логику для открытия вашего приложения
-        bot.send_message(call.message.chat.id, "Opening the app...")
 
 @bot.message_handler(commands=['invite'])
 def invite_friends(message):
