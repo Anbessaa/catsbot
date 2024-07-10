@@ -6,7 +6,116 @@
     <title>CATS Token App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* Your existing styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .score-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .cat-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+        }
+        .join-community {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .join-btn {
+            background-color: #FFFFFF;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .rewards {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .reward-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .navigation {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: #1e1e1e;
+            padding: 10px;
+        }
+        .nav-button {
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .leaderboard {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 60px;
+        }
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .user-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .invite-friends {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .invite-btn {
+            background-color: #FFFFFF;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -52,15 +161,15 @@
     
     <div class="navigation">
         <button class="nav-button" onclick="showScreen('home')">
-            <span class="nav-icon">🏠</span>
+            <span class="nav-icon" style="font-family: 'FontAwesome';">🏠</span>
             Home
         </button>
         <button class="nav-button" onclick="showScreen('leaderboard')">
-            <span class="nav-icon">📊</span>
+            <span class="nav-icon" style="font-family: 'FontAwesome';">📊</span>
             Leaderboard
         </button>
         <button class="nav-button" onclick="showScreen('friends')">
-            <span class="nav-icon">👥</span>
+            <span class="nav-icon" style="font-family: 'FontAwesome';">👥</span>
             Friends
         </button>
     </div>
@@ -89,54 +198,37 @@
 
         function fetchLeaderboard() {
             // Placeholder for your server request to get leaderboard data
-            const leaderboardData = [
-                { name: 'User1', score: 2561959, rank: 1 },
-                { name: 'User2', score: 1884940, rank: 2 },
-                { name: 'User3', score: 1821428, rank: 3 },
-                // ... add more users
-            ];
-            
-            const leaderboardList = document.getElementById('leaderboardList');
+            let leaderboardList = document.getElementById('leaderboardList');
             leaderboardList.innerHTML = '';
-            leaderboardData.forEach(user => {
-                const item = document.createElement('div');
-                item.className = 'leaderboard-item';
+            // Simulated data
+            const users = [
+                { name: 'User1', score: 2000 },
+                { name: 'User2', score: 1800 },
+                { name: 'User3', score: 1500 }
+            ];
+            users.forEach(user => {
+                let item = document.createElement('div');
+                item.classList.add('leaderboard-item');
                 item.innerHTML = `
-                    <div style="display: flex; align-items: center;">
-                        <div class="user-icon" style="background-color: ${getRandomColor()}">
-                            ${user.name.charAt(0).toUpperCase()}
-                        </div>
-                        <span>${user.name}</span>
-                    </div>
-                    <div>
-                        <span>${user.score.toLocaleString()} CATS</span>
-                        ${user.rank <= 3 ? `<span>🏅</span>` : ''}
-                    </div>
+                    <div class="user-icon" style="background-color: #555;">${user.name.charAt(0)}</div>
+                    <span>${user.name}</span>
+                    <span>${user.score} CATS</span>
                 `;
                 leaderboardList.appendChild(item);
             });
         }
 
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
         function joinGroup() {
-            tg.openTelegramLink('https://t.me/blackcat_community');
+            // Placeholder for group joining logic
+            alert('Joining group...');
         }
 
         function inviteFriends() {
-            tg.ShareAppUrl();
+            // Placeholder for invite friends logic
+            alert('Inviting friends...');
         }
 
-        // Initialization
         fetchUserData();
-        showScreen('home');
     </script>
 </body>
 </html>
