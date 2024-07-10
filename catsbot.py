@@ -16,7 +16,7 @@ conn.commit()
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton("Let's go", web_app=types.WebAppInfo(url='YOUR_WEBAPP_URL')))
+    markup.add(types.InlineKeyboardButton("Let's go", web_app=types.WebAppInfo(url='https://anbessaa.github.io/catsbot/')))
     bot.reply_to(message, "How cool is your Telegram profile? Check your rating and receive rewards.", reply_markup=markup)
 
 @app.route('/webapp', methods=['GET', 'POST'])
