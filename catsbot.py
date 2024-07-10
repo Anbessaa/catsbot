@@ -16,7 +16,11 @@ async def get_user_registration_date(user_id):
     await client.start()
     try:
         full_user = await client(GetFullUserRequest(user_id))
-        return full_user.full_user.date
+        # Используем первое сообщение пользователя как приближение даты регистрации
+        messages = await client.get_messages(user_id, limit=1, reverse=True)
+        if messages:
+            return messages[0].date
+        return None
     finally:
         await client.disconnect()
 
@@ -27,7 +31,7 @@ def calculate_cats(is_premium, account_age_years):
     elif account_age_years < 2:
         age_tokens = 2000
     else:
-        age_tokens = 3000 + (account_age_years - 2) * 1000
+        age_tokens = 3000 + int((account_age_years - 2) * 1000)
     return base_tokens + age_tokens
 
 @bot.message_handler(commands=['start'])
@@ -38,7 +42,10 @@ def send_welcome(message):
     
     # Получаем дату регистрации
     registration_date = asyncio.run(get_user_registration_date(user_id))
-    account_age_years = (datetime.now() - registration_date).days / 365.25
+    if registration_date:
+        account_age_years = (datetime.now(registration_date.tzinfo) - registration_date).days / 365.25
+    else:
+        account_age_years = 0
     
     cats_tokens = calculate_cats(is_premium, account_age_years)
     
@@ -60,7 +67,7 @@ def send_welcome(message):
         'id': '1',
         'title': 'User Data',
         'input_message_content': {
-            'message_text': f'account_age_years:{account_age_years},is_premium:{is_premium},cats_tokens:{cats_tokens}'
+            'message_text': f'account_age_years:{account_age_years:.2f},is_premium:{is_premium},cats_tokens:{cats_tokens}'
         }
     })
 
