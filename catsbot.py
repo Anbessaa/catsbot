@@ -1,5 +1,5 @@
 import telebot
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 from datetime import datetime
 import requests
 
