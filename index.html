@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATS Token App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <h1>Welcome to CATS Token App</h1>
+    <div id="mainContent"></div>
+    <button onclick="showHome()">Home</button>
+    <button onclick="showLeaderboard()">Leaderboard</button>
+    <button onclick="showFriends()">Friends</button>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function showHome() {
+            document.getElementById('mainContent').innerHTML = `
+                <h2>Home</h2>
+                <p>Your CATS tokens: 1000</p>
+                <button onclick="tg.openTelegramLink('https://t.me/your_group')">Join our group</button>
+            `;
+        }
+
+        function showLeaderboard() {
+            document.getElementById('mainContent').innerHTML = `
+                <h2>Leaderboard</h2>
+                <ol>
+                    <li>User1 - 1500 CATS</li>
+                    <li>User2 - 1200 CATS</li>
+                    <li>You - 1000 CATS</li>
+                </ol>
+            `;
+        }
+
+        function showFriends() {
+            document.getElementById('mainContent').innerHTML = `
+                <h2>Invite friends and get more CATS</h2>
+                <img src="https://placekitten.com/300/200" alt="Cat">
+                <p>Tap on the button to invite your friends</p>
+                <button onclick="tg.openInviteLink('https://t.me/share/url?url=Join%20me%20in%20this%20awesome%20bot!')">Invite friends</button>
+            `;
+        }
+
+        // Показываем домашний экран при загрузке
+        showHome();
+    </script>
+</body>
+</html>
