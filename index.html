@@ -5,124 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CATS Token App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #0088cc;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .cat-image {
-            width: 100%;
-            max-width: 300px;
-            margin: 20px auto;
-            display: block;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <div id="home" style="display: none;">
-            <h2>Welcome to CATS Token App</h2>
-            <p>Your status: <span id="status"></span></p>
-            <p>Your CATS tokens: <span id="tokens"></span></p>
-            <button class="button" onclick="joinGroup()">Join our group</button>
-        </div>
-        
-        <div id="leaderboard" style="display: none;">
-            <h2>Leaderboard</h2>
-            <ul id="leaderList"></ul>
-        </div>
-        
-        <div id="friends" style="display: none;">
-            <h2>Invite friends and get more CATS</h2>
-            <img src="https://placekitten.com/300/200" alt="Cat" class="cat-image">
-            <p>Tap on the button to invite your friends</p>
-            <button class="button" onclick="inviteFriends()">Invite friends</button>
-        </div>
-        
-        <div id="navigation">
-            <button class="button" onclick="showScreen('home')">Home</button>
-            <button class="button" onclick="showScreen('leaderboard')">Leaderboard</button>
-            <button class="button" onclick="showScreen('friends')">Friends</button>
-        </div>
-    </div>
+    <h1>Welcome to CATS Token App</h1>
+    <div id="mainContent"></div>
+    <button onclick="showHome()">Home</button>
+    <button onclick="showLeaderboard()">Leaderboard</button>
+    <button onclick="showFriends()">Friends</button>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        function showScreen(screenName) {
-            document.getElementById('home').style.display = 'none';
-            document.getElementById('leaderboard').style.display = 'none';
-            document.getElementById('friends').style.display = 'none';
-            document.getElementById(screenName).style.display = 'block';
-            
-            if (screenName === 'leaderboard') {
-                fetchLeaderboard();
-            }
+        function showHome() {
+            document.getElementById('mainContent').innerHTML = `
+                <h2>Home</h2>
+                <p>Your CATS tokens: 1000</p>
+                <button onclick="tg.openTelegramLink('https://t.me/your_group')">Join our group</button>
+            `;
         }
 
-        function fetchUserData() {
-            fetch('/webapp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(tg.initDataUnsafe.user)
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('status').textContent = data.status;
-                document.getElementById('tokens').textContent = data.cats_tokens;
-            });
+        function showLeaderboard() {
+            document.getElementById('mainContent').innerHTML = `
+                <h2>Leaderboard</h2>
+                <ol>
+                    <li>User1 - 1500 CATS</li>
+                    <li>User2 - 1200 CATS</li>
+                    <li>You - 1000 CATS</li>
+                </ol>
+            `;
         }
 
-        function fetchLeaderboard() {
-            fetch('/leaderboard')
-            .then(response => response.json())
-            .then(data => {
-                let leaderList = document.getElementById('leaderList');
-                leaderList.innerHTML = '';
-                data.forEach((user, index) => {
-                    let li = document.createElement('li');
-                    li.textContent = `${index + 1}. User ${user[0]} - ${user[1]} CATS`;
-                    leaderList.appendChild(li);
-                });
-            });
+        function showFriends() {
+            document.getElementById('mainContent').innerHTML = `
+                <h2>Invite friends and get more CATS</h2>
+                <img src="https://placekitten.com/300/200" alt="Cat">
+                <p>Tap on the button to invite your friends</p>
+                <button onclick="tg.openInviteLink('https://t.me/share/url?url=Join%20me%20in%20this%20awesome%20bot!')">Invite friends</button>
+            `;
         }
 
-        function joinGroup() {
-            tg.openTelegramLink('https://t.me/your_group');
-        }
-
-        function inviteFriends() {
-            tg.openInviteLink('https://t.me/share/url?url=Join%20me%20in%20this%20awesome%20bot!');
-        }
-
-        // �������������
-        fetchUserData();
-        showScreen('home');
+        // Показываем домашний экран при загрузке
+        showHome();
     </script>
 </body>
 </html>
